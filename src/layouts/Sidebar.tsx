@@ -1,11 +1,12 @@
 import { useState } from "react";
+import {Archive, Book, Calendar, LayoutDashboard, LogOut, Mail, Settings} from "lucide-react";
 import SidebarButton from "../components/sidebar/SidebarButton.tsx";
-import {Archive, Book, Calendar, LogOut, Mail, Settings} from "lucide-react";
 
 const buttonsMain = [
     { label: "Catálogo", icon: Archive },
     { label: "Reservas", icon: Calendar },
     { label: "Cadastro", icon: Book },
+    { label: "Dashboard", icon: LayoutDashboard}
 ];
 
 const buttonsEnd = [
@@ -18,9 +19,12 @@ function Sidebar() {
 
     return (
         <div className="hidden xl:flex flex-col bg-second w-auto h-full p-6 rounded-l-3xl shadow-xl z-20 overflow-x-hidden">
+            {/* Side Bar Logo */}
             <button className="inline w-70 cursor-pointer">
-                <img src="../../public/logo_black.webp" alt="logo" className="h-24" />
+                <img src="../../public/LogoBlack.webp" alt="logo" className="h-24" />
             </button>
+
+            {/* Conjunto de botões das abas principais */}
             <div className="flex flex-col gap-6 mt-15">
                 {buttonsMain.map(({ label, icon }) => (
                     <SidebarButton
@@ -33,8 +37,10 @@ function Sidebar() {
                 ))}
             </div>
 
+            {/* Conjunto de botões das abas secundárias */}
             <div className="flex flex-col mt-auto gap-5">
-                <div className="w-full h-px bg-[#F1F1F1]" />
+                <hr className="w-full h-px text-[#F1F1F1]" />
+
                 {buttonsEnd.map(({ label, icon }) => (
                     <SidebarButton
                         key={label}

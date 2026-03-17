@@ -5,10 +5,10 @@ function SidebarButton({ label, icon: Icon, isSelected, onClick }: sideBarButton
     return (
         <div className="flex items-center gap-3">
             <button onClick={onClick} className={clsx(
-                "flex w-10 h-10 rounded-[10px] items-center justify-center cursor-pointer hover:scale-110 transition-all",
+                "flex w-10 h-10 rounded-xl items-center justify-center cursor-pointer hover:scale-110 transition-all",
                 isSelected ? "bg-five" : "bg-third"
             )}>
-                <Icon className={isSelected ? "text-white" : "text-four"} />
+                <Icon className={clsx("transition-colors", isSelected ? "text-white" : "text-four")} />
             </button>
             <h4 className={clsx(
                 "text-xl transition-all",
