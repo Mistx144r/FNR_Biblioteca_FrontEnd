@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import type { sideBarButtonType } from "../../types/sidebarButtonType.ts";
+import type { sideBarButtonType } from "@/types/sidebarButtonType.ts";
 
 function SidebarButton({ label, icon: Icon, isSelected, onClick }: sideBarButtonType) {
     return (

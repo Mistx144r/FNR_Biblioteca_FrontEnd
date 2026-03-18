@@ -1,4 +1,4 @@
-import { Bell, ChevronDown, Menu, Search } from "lucide-react";
+import { Bell, Menu, Search } from "lucide-react";
 
 function Header() {
   return (
@@ -27,10 +27,7 @@ function Header() {
             src="../../public/defaultuser.webp"
             className="size-8 rounded-full"
           />
-          <div className="hidden sm:flex gap-1">
-            <h3 className="hidden md:inline truncate">Nova Roma Faculdade</h3>
-            <ChevronDown className="cursor-pointer hover:scale-110 transition-transform" />
-          </div>
+            <h3 className="hidden lg:inline truncate">Nova Roma Faculdade</h3>
         </div>
       </div>
     </div>
