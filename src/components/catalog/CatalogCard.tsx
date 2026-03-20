@@ -11,6 +11,7 @@ import ImageWithPlaceholder from "@/components/loading/ImageWithPlaceholder.tsx"
 //----------------------------
 import type { Book } from "@/schemas/bookDataSchemas.ts";
 import {useSidebarContext} from "@/contexts/SidebarBookContext.tsx";
+import {useNavigate} from "react-router-dom";
 
 type Props = {
     book: Book;
@@ -18,10 +19,15 @@ type Props = {
 
 function CatalogCard({ book }: Props) {
     const { setCurrentBook, setSidebarStatus } = useSidebarContext();
+    const navigate = useNavigate();
 
     function handleClickResume() {
         setCurrentBook(book);
         setSidebarStatus(true);
+    }
+
+    function handleGoToBookPage() {
+        navigate(`/book/${book?.id_book}`);
     }
 
     return (
@@ -43,7 +49,7 @@ function CatalogCard({ book }: Props) {
             </div>
 
             {/* Botão ver exemplares */}
-            <button className="flex bg-five text-white justify-center items-center rounded-xl mt-3 p-2 cursor-pointer hover:brightness-110 active:brightness-90 transition-all">
+            <button onClick={handleGoToBookPage} className="flex bg-five text-white justify-center items-center rounded-xl mt-3 p-2 cursor-pointer hover:brightness-110 active:brightness-90 transition-all">
                 <ChevronsRight />
                 Ver Exemplares
             </button>

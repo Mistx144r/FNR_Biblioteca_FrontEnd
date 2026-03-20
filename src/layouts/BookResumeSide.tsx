@@ -2,12 +2,18 @@ import { useSidebarContext } from "@/contexts/SidebarBookContext.tsx";
 import {X} from "lucide-react";
 import NoCover from "../../public/NoCover.webp"
 import ImageWithPlaceholder from "@/components/loading/ImageWithPlaceholder.tsx";
+import {useNavigate} from "react-router-dom";
 
 function BookResumeSide() {
     const { currentBook, setSidebarStatus } = useSidebarContext();
+    const navigate = useNavigate()
 
     function closeSidebar() {
         setSidebarStatus(false);
+    }
+
+    function handleGoToBookPage() {
+        navigate(`/book/${currentBook?.id_book}`);
     }
 
     return (
@@ -22,7 +28,9 @@ function BookResumeSide() {
                         <X className="cursor-pointer size-8" onClick={closeSidebar}/>
                     </div>
                     <div className="flex flex-col justify-center items-center gap-3">
-                        <ImageWithPlaceholder key={currentBook?.bookcover} src={currentBook?.bookcover} sizeY={415} sizeX={314} fallbackSrc={NoCover} alt={"Bookcover"} ref={true}/>
+                        <button onClick={handleGoToBookPage} className="cursor-pointer">
+                            <ImageWithPlaceholder key={currentBook?.bookcover} src={currentBook?.bookcover} sizeY={415} sizeX={314} fallbackSrc={NoCover} alt={"Bookcover"} ref={true}/>
+                        </button>
 
                         <div className="flex flex-col justify-center items-center">
                             <h1 className="text-[1.75rem] font-bold text-wrap text-center">{currentBook?.name}</h1>
@@ -62,7 +70,7 @@ function BookResumeSide() {
                         </p>
                     </div>
 
-                    <button className="bg-five p-4 rounded-full mt-12 cursor-pointer hover:brightness-110 active:brightness-95 transition-all">
+                    <button onClick={handleGoToBookPage} className="bg-five p-4 rounded-full mt-12 cursor-pointer hover:brightness-110 active:brightness-95 transition-all">
                         <h4>Ver Exemplares</h4>
                     </button>
                 </>

@@ -5,9 +5,10 @@ import Header from "../layouts/Header.tsx";
 import BookResumeSide from "../layouts/BookResumeSide.tsx";
 
 import CatalogPage from "./CatalogPage.tsx";
-import PageNotFound from "@/pages/PageNotFound.tsx";
+import BookPage from "./BookPage.tsx";
 
 import {useSidebarContext} from "@/contexts/SidebarBookContext.tsx";
+import RegistrationPage from "@/pages/RegistrationPage.tsx";
 
 function DashboardPage() {
     const { sidebarStatus } = useSidebarContext();
@@ -21,7 +22,8 @@ function DashboardPage() {
                     <div className="flex flex-1 w-full min-h-0 overflow-y-auto desktop:px-3 desktop:pt-3">
                         <Routes>
                             <Route path="/" element={<CatalogPage />} />
-                            <Route path="/not" element={<PageNotFound />} />
+                            <Route path="/book/:bookId" element={<BookPage />} />
+                            <Route path="/register" element={<RegistrationPage />} />
                         </Routes>
                     </div>
                     {sidebarStatus &&(

@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { ChevronLeft, ChevronRight, Filter } from "lucide-react";
 
-const serverIP: string = import.meta.env.VITE_SERVER_IP || "123";
+const serverIP: string = import.meta.env.VITE_SERVER_IP;
 
 //------------------------
 // Components
@@ -19,11 +19,13 @@ import type {Category} from "@/schemas/categoryDataSchemas.ts";
 function CatalogPage() {
     const {data: categories, error: categoryError, isLoading: categoryLoading} = useQuery<Category[]>({
         queryKey: ["allCategories"],
+        staleTime: 5000,
         queryFn: () => axios.get(`${serverIP}/v1/categories/`).then((res) => res.data)
     });
 
     const {data: books, error: booksError, isLoading: booksLoading} = useQuery<BookData>({
         queryKey: ["Books:Page1:Limit10"],
+        staleTime: 5000,
         queryFn: () => axios.get(`${serverIP}/v1/books/`).then((res) => res.data)
     });
 

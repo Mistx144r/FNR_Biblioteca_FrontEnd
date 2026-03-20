@@ -31,6 +31,7 @@ export const updateBookSchema = createBookSchema.partial();
 // Book Return Data Type
 //----------------------------
 type AuthorsAndCategory = {
+    id_book: number
     category: { id_category: number, name: string }
     authors: { id_author: number, name: string }[]
 }

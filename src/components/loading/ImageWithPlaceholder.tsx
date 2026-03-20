@@ -78,7 +78,7 @@ function ImageWithPlaceholder({ src, alt = "", sizeX, sizeY, fallbackSrc, timeou
         <div
             ref={tiltRef}
             style={sizeStyles}
-            className="group relative rounded-md overflow-hidden"
+            className={clsx("group relative rounded-md overflow-hidden", ref ? "shadow-xl" : "")}
         >
             {!imageLoaded && (
                 <div className="absolute inset-0 bg-four animate-pulse" />
