@@ -54,9 +54,9 @@ function BookPage() {
 
                 {!bookLoading && (
                     <div className="flex flex-1 w-full flex-col overflow-x-auto">
-                        <h1 className="text-4xl font-bold">{book?.name}</h1>
+                        <h1 className="text-4xl font-bold desktopHDL:text-6xl">{book?.name}</h1>
 
-                        <div className="flex text-sm font-light gap-2">
+                        <div className="flex text-sm font-light gap-2 desktopHDL:text-lg">
                             <h3 className="cursor-pointer hover:underline">{book?.authors[0].name}</h3>
                             <p>•</p>
                             <h3 className="cursor-pointer hover:underline">{book?.category.name}</h3>
