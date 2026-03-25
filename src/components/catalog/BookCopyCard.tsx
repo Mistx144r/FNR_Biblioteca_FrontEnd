@@ -1,4 +1,10 @@
 import clsx from "clsx";
+import axios from "axios";
+import { ExternalLink, SquarePen, Trash } from "lucide-react";
+import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+const serverIP: string = import.meta.env.VITE_SERVER_IP;
 
 type Sector = {
     id_sector: string;
@@ -31,31 +37,43 @@ export type BookCopyCardProps = {
     description: string;
     institution: Institution;
     bookcase: Bookcase;
+    editing: boolean;
 };
 
 function colorChooser(state: string): string {
     switch (state) {
-        case "DISPONIVEL":
-            return "bg-green-100 text-green-700";
-        case "RESERVADO":
-            return "bg-yellow-100 text-yellow-700";
-        case "EMPRESTADO":
-            return "bg-blue-100 text-blue-700";
-        case "INDISPONIVEL":
-            return "bg-red-100 text-red-700";
-        default:
-            return "bg-gray-100 text-gray-700";
+        case "DISPONIVEL":   return "bg-green-100 text-green-700";
+        case "RESERVADO":    return "bg-yellow-100 text-yellow-700";
+        case "EMPRESTADO":   return "bg-blue-100 text-blue-700";
+        case "INDISPONIVEL": return "bg-red-100 text-red-700";
+        default:             return "bg-gray-100 text-gray-700";
     }
 }
 
-// Centralizar esses types dps nos tipos corretos.
+function BookCopyCard({ index, id_book_copy, fk_book_id, description, bookcase, institution, is_virtual, state, editing }: BookCopyCardProps) {
+    const queryClient = useQueryClient();
+    const [visible, setVisible] = useState(true);
 
-function BookCopyCard({ index, description, bookcase, institution, is_virtual, state, is_consult }: BookCopyCardProps) {
+    const { mutate: deleteCopy, isPending: isDeleting } = useMutation({
+        mutationFn: () =>
+            axios.delete(`${serverIP}/v1/bookcopies/${id_book_copy}`, { withCredentials: true }),
+        onSuccess: () => {
+            setVisible(false);
+            queryClient.invalidateQueries({ queryKey: [`copies-${fk_book_id}`] });
+        },
+    });
+
+    function deleteBookCopy() {
+        deleteCopy();
+    }
+
+    if (!visible) return null;
+
     return (
-        <tr className="border-b border-black/5 hover:bg-black/5 transition-colors">
+        <tr className="border-b border-black/5 hover:bg-black/5 cursor-pointer active:scale-[98%] desktop:active:scale-none desktopHDL:cursor-default transition-all">
             <td className="px-4 py-3 font-black text-gray-700">{index}</td>
 
-            <td className="hidden px-4 py-3 text-gray-500 desktopHDL:table-cell">{description}</td>
+            <td className="hidden px-4 py-3 text-gray-500 desktopHDL:table-cell">{description ? description : "Nenhuma descrição"}</td>
 
             <td className="hidden px-4 py-3 text-gray-500 desktopHDL:table-cell">{bookcase.name}</td>
 
@@ -65,13 +83,35 @@ function BookCopyCard({ index, description, bookcase, institution, is_virtual, s
 
             <td className="px-4 py-3 text-gray-500">{is_virtual ? "Virtual" : "Físico"}</td>
 
-            <td className="px-4 py-3">
-                <span className={clsx("px-2 py-0.5 rounded-full text-xs font-medium", colorChooser(state))}>{state}</span>
+            <td className="px-4 py-3 text-gray-500">
+                <div className="flex justify-center text-center md:justify-start">
+                    <span className={clsx("hidden px-2 py-0.5 rounded-full text-xs font-medium md:inline-flex", colorChooser(state))}>{state}</span>
+                    <span className={clsx("flex p-3 w-4 h-4 rounded-full md:hidden items-center justify-center", colorChooser(state))}>{state[0]}</span>
+                </div>
             </td>
 
-            {/* Possivelmente mudar a maneira de mostrar */}
-            <td className="px-4 py-3">
-                <span title={is_consult ? "Sim" : "Não"} className={clsx("flex h-4 w-4 rounded-full justify-self-center", is_consult ? "bg-green-300" : "bg-red-300")}></span>
+            <td>
+                <div className="flex items-center gap-3">
+                    <button className="text-four desktopHDL:hidden cursor-pointer">
+                        <ExternalLink />
+                    </button>
+
+                    {editing && (
+                        <>
+                            <button className="text-orange-300 cursor-pointer">
+                                <SquarePen className="size-6" />
+                            </button>
+
+                            <button
+                                onClick={deleteBookCopy}
+                                disabled={isDeleting}
+                                className="text-red-300 cursor-pointer disabled:opacity-40"
+                            >
+                                <Trash className="size-6" />
+                            </button>
+                        </>
+                    )}
+                </div>
             </td>
         </tr>
     );

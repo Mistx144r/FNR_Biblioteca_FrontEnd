@@ -7,7 +7,7 @@ import {
     Mail,
     Settings,
 } from "lucide-react";
-import SidebarButton from "../components/sidebar/SidebarButton.tsx";
+import SidebarButton from "../../components/sidebar/SidebarButton.tsx";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const buttonsMain = [
@@ -29,7 +29,7 @@ function Sidebar() {
     return (
         <div className="hidden flex-col bg-second w-auto h-full p-6 rounded-l-3xl shadow-xl z-20 desktop:flex">
             <button className="inline w-70 cursor-pointer" onClick={() => navigate("/")}>
-                <img src="../../public/LogoBlack.webp" alt="logo" className="h-24" />
+                <img src="../../../public/LogoBlack.webp" alt="logo" className="h-24" />
             </button>
 
             <div className="flex flex-col gap-6 mt-15">

@@ -34,7 +34,7 @@ function CatalogCard({ book }: Props) {
         <div className="flex flex-col bg-[#FAFAFA] gap-2 w-48 h-94 rounded-xl p-3 overflow-x-hidden">
             {/* Imagem do album / Botão para abrir resumo */}
             <button className="cursor-pointer hover:scale-[103%] transition-all" onClick={handleClickResume}>
-                <ImageWithPlaceholder src={book.bookcover} alt={"Bookcover"} sizeX={"48"} sizeY={"240px"} fallbackSrc={NoCover} ref={false}/>
+                <ImageWithPlaceholder src={book.bookcover as string} alt={"Bookcover"} sizeX={"48"} sizeY={"240px"} fallbackSrc={NoCover} ref={false}/>
             </button>
 
             {/* Nome do livro / Nome dos autores */}

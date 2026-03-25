@@ -66,14 +66,14 @@ function CatalogPage() {
                     </ToggleGroup>
 
                     {/* Catalogo dos livros */}
-                    <div className="flex w-full h-full mt-5 flex-wrap gap-5 overflow-y-scroll">
+                    <div className="grid w-full mt-5 gap-5 overflow-y-scroll" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))' }}>
                         {books?.data.map((book: Book) => (
                             <CatalogCard key={book.isbn} book={book} />
                         ))}
                     </div>
 
                     {/* Page controller */}
-                    <div className="flex justify-center items-center gap-3 mt-5 text-four">
+                    <div className="flex justify-center items-center gap-3 mt-auto text-four">
                         {books?.meta.hasPreviousPage && (
                             <button>
                                 <ChevronLeft className="size-5" />

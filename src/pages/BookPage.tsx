@@ -1,5 +1,6 @@
+import clsx from "clsx";
 import axios, {type AxiosError} from "axios";
-import { Barcode, BookOpen, LanguagesIcon } from "lucide-react";
+import { Barcode, BookOpen, LanguagesIcon, Plus, Pencil } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
@@ -12,7 +13,8 @@ import BookPageTextSkeleton from "@/components/loading/BookPageTextSkeleton.tsx"
 
 import type { Book } from "@/schemas/bookDataSchemas.ts";
 import type { BookCopyCardProps } from "@/components/catalog/BookCopyCard.tsx";
-import clsx from "clsx";
+import {useState} from "react";
+import BookCopyModal from "@/components/modals/BookCopyModal.tsx";
 
 // Tipagem temporaria
 type Subcategories = {
@@ -26,6 +28,7 @@ const serverIP: string = import.meta.env.VITE_SERVER_IP;
 
 function BookPage() {
     const { bookId } = useParams();
+    const [creatingNewBookCopy, setCreatingNewBookCopy] = useState<boolean>(false);
 
     const {data: book, error: bookError, isLoading: bookLoading} = useQuery<Book & Subcategories, AxiosError>({
         queryKey: [`book-${bookId}`],
@@ -45,8 +48,18 @@ function BookPage() {
         );
     }
 
+    window.addEventListener("keydown", (keyPressed) => {
+        if (keyPressed.key === "Escape") {
+            setCreatingNewBookCopy(false);
+        }
+    })
+
     return (
-        <div className="flex flex-col bg-white w-full h-full gap-5 p-5 tablet:p-6 overflow-y-auto desktop:rounded-3xl">
+        <div className="flex flex-col relative bg-white w-full h-full gap-5 p-5 tablet:p-6 overflow-y-auto desktop:rounded-3xl">
+            {creatingNewBookCopy && (
+                <BookCopyModal bookId={Number(book?.id_book)} onClose={() => setCreatingNewBookCopy(false)} />
+            )}
+
             <div className="flex flex-col-reverse justify-between gap-5 tablet:flex-row-reverse desktop:flex-row">
                 {bookLoading && (
                     <BookPageTextSkeleton />
@@ -56,11 +69,16 @@ function BookPage() {
                     <div className="flex flex-1 w-full flex-col overflow-x-auto">
                         <h1 className="text-4xl font-bold desktopHDL:text-6xl">{book?.name}</h1>
 
-                        <div className="flex text-sm font-light gap-2 desktopHDL:text-lg">
+                        <div className="flex flex-col text-sm font-light xxs:gap-2 xxs:flex-row desktopHDL:text-lg">
+                            <h3 className="font-bold mt-2 xxs:hidden">Autor: </h3>
                             <h3 className="cursor-pointer hover:underline">{book?.authors[0].name}</h3>
-                            <p>•</p>
+
+                            <p className="hidden xxs:block">•</p>
+                            <h3 className="font-bold mt-2 xxs:hidden">Categoria: </h3>
                             <h3 className="cursor-pointer hover:underline">{book?.category.name}</h3>
-                            <p>•</p>
+
+                            <h3 className="font-bold mt-2 xxs:hidden">Edição: </h3>
+                            <p className="hidden xxs:block">•</p>
                             <h3>{book?.edition}ª Edição</h3>
                         </div>
 
@@ -79,7 +97,7 @@ function BookPage() {
                                 )}
 
                                 {book?.subCategories.map((subcategory) => (
-                                    <button className="w-auto h-auto text-white bg-five p-1 px-2 rounded-full">
+                                    <button key={subcategory.name + subcategory.id_sub_category} className="w-auto h-auto text-white bg-five p-1 px-2 rounded-full">
                                         {subcategory.name}
                                     </button>
                                 ))}
@@ -121,13 +139,24 @@ function BookPage() {
 
             <div className="flex flex-col w-full h-auto gap-3">
                 <h2 className="font-semibold text-base">Exemplares: </h2>
+                {!copiesLoading && (
+                    <div className="flex gap-2">
+                        <button title="Adicionar um exemplar" onClick={() => setCreatingNewBookCopy(true)} className="bg-five text-white p-1 rounded-full cursor-pointer hover:scale-105 transition-transform">
+                            <Plus />
+                        </button>
+
+                        <button title="Editar lista de exemplares" className="bg-five text-white p-1 rounded-full cursor-pointer hover:scale-105 transition-transform">
+                            <Pencil className="p-1" />
+                        </button>
+                    </div>
+                )}
                 <div className={clsx("flex flex-col bg-third w-full h-auto p-3 gap-2 rounded-b-2xl", copiesLoading ? "justify-center items-center" : "")}>
                     {copiesLoading && (
                         <Spinner className="size-8 text-four" />
                     )}
 
                     {!copiesLoading && (
-                        <BookCopyTable data={copies} />
+                        <BookCopyTable data={ copies } />
                     )}
 
                     {((!copies || copiesError?.response?.status === 404 || copies.length === 0) && !copiesLoading) && (

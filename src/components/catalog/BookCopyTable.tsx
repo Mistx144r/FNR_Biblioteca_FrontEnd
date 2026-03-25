@@ -15,14 +15,13 @@ function BookCopyTable({ data }: BookCopyTableProps) {
                 <th className="hidden px-4 py-3 font-medium desktopHDL:table-cell">Setor</th>
                 <th className="hidden px-4 py-3 font-medium xs:table-cell">Instituição</th>
                 <th className="px-4 py-3 font-medium">Tipo</th>
-                <th className="px-4 py-3 font-medium">Estado</th>
-                <th className="px-4 py-3 font-medium">Consulta</th>
+                <th className="px-4 py-3 font-medium text-center md:text-left">Estado</th>
             </tr>
             </thead>
 
             <tbody>
             {data?.map((copy, index) => (
-                <BookCopyCard key={index} {...copy} index={index + 1} />
+                <BookCopyCard key={copy.id_book_copy} {...copy} index={index + 1} />
             ))}
             </tbody>
         </table>

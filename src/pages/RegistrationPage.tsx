@@ -1,5 +1,5 @@
-import {ToggleGroup, ToggleGroupItem} from "@/components/ui/toggle-group.tsx";
-import {useState} from "react";
+import { useState } from "react";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import FormBook from "@/components/forms/FormBook.tsx";
 
 function capitalizeFirstLetter(string: string) {
@@ -18,29 +18,30 @@ const buttons = [
     "livro"
 ]
 
-function  RegistrationPage(){
+function RegistrationPage(){
     const [currentPage, setCurrentPage] = useState<string>("livro");
-    const toggleItemClass = "transition-all data-[state=on]:bg-five data-[state=on]:text-white data-[state=on]:border-transparent cursor-pointer";
 
     return (
-        <div className="flex flex-col bg-white w-full h-full gap-5 p-5 tablet:p-6 overflow-y-auto desktop:rounded-3xl">
-            <div className="flex-1 overflow-y-auto p-8">
-                <div className="max-w-5xl mx-auto">
-                    <div className="mb-8">
-                    <h2 className="text-2xl font-bold text-six">Cadastros</h2>
-                        <ToggleGroup type="single" size="sm" onValueChange={(tg) => setCurrentPage(tg)} defaultValue="livro" variant="outline" spacing={2} className="hidden md:flex mt-5 flex-wrap">
-                            {buttons.map(button => (
-                                <ToggleGroupItem
-                                    key={button}
-                                    value={button}
-                                    className={toggleItemClass}
-                                >
-                                    {capitalizeFirstLetter(button)}
-                                </ToggleGroupItem>
-                            ))}
-                        </ToggleGroup>
-                    </div>
-                    <div className="flex w-full h-full">
+        <div className="flex bg-white w-full h-full gap-5 p-3 tablet:p-6 overflow-y-auto desktop:rounded-3xl">
+            <div className="flex-1">
+                <div className="flex flex-col gap-10 md:gap-5">
+                    <section>
+                        <h2 className="text-3xl font-bold text-six">Cadastro</h2>
+                        <Tabs defaultValue="livro" onValueChange={(newValue) => setCurrentPage(newValue)}>
+                            <TabsList variant="line" className="flex-wrap">
+                                {buttons.map(button => (
+                                    <TabsTrigger
+                                        key={button}
+                                        value={button}
+                                    >
+                                        {capitalizeFirstLetter(button)}
+                                    </TabsTrigger>
+                                ))}
+                            </TabsList>
+                        </Tabs>
+                    </section>
+
+                    <div className="flex w-full h-full overflow-y-auto">
                         {(currentPage === "livro") && (
                             <FormBook />
                         )}

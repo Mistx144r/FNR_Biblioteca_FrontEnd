@@ -3,8 +3,8 @@ import type { sideBarButtonType } from "@/types/sidebarButtonType.ts";
 
 function SidebarButton({ label, icon: Icon, isSelected, onClick }: sideBarButtonType) {
     return (
-        <div className="flex items-center gap-3">
-            <button onClick={onClick} className={clsx(
+        <div onClick={onClick} className="flex items-center gap-3 cursor-pointer">
+            <button className={clsx(
                 "flex w-10 h-10 rounded-xl items-center justify-center cursor-pointer hover:scale-110 transition-all",
                 isSelected ? "bg-five" : "bg-third"
             )}>
