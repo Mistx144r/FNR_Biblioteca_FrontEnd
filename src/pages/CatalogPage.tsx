@@ -44,7 +44,7 @@ function CatalogPage() {
             {(!categoryError && !categoryLoading) && (
                 <>
                     {/* Nome da Aba + Filtro */}
-                    <div className="flex w-full h-5 justify-between items-center">
+                    <div className="flex w-full h-auto justify-between items-center">
                         <h1 className="text-six font-bold text-3xl">Catálogo</h1>
                         <button>
                             <Filter className="text-four"/>

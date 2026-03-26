@@ -8,11 +8,11 @@ import NoCover from "../../public/NoCover.webp";
 
 import { Spinner } from "@/components/ui/spinner.tsx";
 import ImageWithPlaceholder from "@/components/loading/ImageWithPlaceholder.tsx";
-import BookCopyTable from "@/components/catalog/BookCopyTable.tsx";
+import BookCopyTable from "@/components/bookcopy/BookCopyTable.tsx";
 import BookPageTextSkeleton from "@/components/loading/BookPageTextSkeleton.tsx";
 
 import type { Book } from "@/schemas/bookDataSchemas.ts";
-import type { BookCopyCardProps } from "@/components/catalog/BookCopyCard.tsx";
+import type { BookCopyCardProps } from "@/components/bookcopy/BookCopyCard.tsx";
 import {useState} from "react";
 import BookCopyModal from "@/components/modals/BookCopyModal.tsx";
 

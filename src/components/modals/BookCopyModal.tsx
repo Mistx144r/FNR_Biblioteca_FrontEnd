@@ -5,7 +5,7 @@ import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 
 import { createBookCopySchema, type BookCopy } from "@/schemas/bookCopyDataSchema.ts";
 import { type Institution } from "@/schemas/institutionDataSchema.ts";
-import { type Sector } from "@/schemas/sectorDataSchema.ts";
+import { type Sector } from "@/schemas/sectorDataSchemas.ts";
 import { type Bookcase } from "@/schemas/bookcaseSchema.ts";
 
 import { X } from "lucide-react";

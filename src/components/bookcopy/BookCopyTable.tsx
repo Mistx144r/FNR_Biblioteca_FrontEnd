@@ -1,4 +1,4 @@
-import BookCopyCard, { type BookCopyCardProps } from "@/components/catalog/BookCopyCard.tsx";
+import BookCopyCard, { type BookCopyCardProps } from "@/components/bookcopy/BookCopyCard.tsx";
 
 type BookCopyTableProps = {
     data: BookCopyCardProps[] | undefined;
